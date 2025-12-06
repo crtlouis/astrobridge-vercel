@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import React from "react";
+import StaggeredMenu from "./components/StaggeredMenu.jsx"; 
+import SpotlightCard from "./components/SpotlightCard.jsx";
+import ColorBends from "./components/ColorBends"; 
+
+
 
 export default function App() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  
+  // --- CONFIGURATION DU MENU ---
+  const menuItems = [
+    { label: 'Introduction', link: '#intro', ariaLabel: 'Watch Introduction' },
+    { label: 'About', link: '#about', ariaLabel: 'About Us' },
+    { label: 'What we do', link: '#get-involved', ariaLabel: 'Get Involved' },
+    { label: 'Apply', link: '#apply', ariaLabel: 'Apply Now' }
+  ];
 
-  // Prevent scrolling when mobile menu is open
-  useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [mobileOpen]);
+  const socialItems = [
+    { label: 'Instagram', link: '#' },
+    { label: 'LinkedIn', link: '#' },
+    { label: 'Email', link: '#' }
+  ];
 
   const handleWatchIntro = () => {
-    setMobileOpen(false);
-    // Smooth scroll to About section since video file is missing
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
@@ -25,84 +31,18 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white/30">
       
-      {/* --- NAVIGATION --- */}
-      <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[2px]">
-        <div className="mx-auto max-w-7xl px-6 py-5">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <a href="#intro" className="inline-flex items-center gap-3 relative z-50">
-              <img 
-                src="/assets/logo.svg" 
-                alt="AstroBridge" 
-                className="h-12 w-auto md:h-14 transition-transform hover:scale-105" 
-                onError={(e) => { e.target.style.display = 'none'; }} 
-              />
-              <span className="sr-only">AstroBridge</span>
-            </a>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-6">
-              <button
-                onClick={handleWatchIntro}
-                className="group relative rounded-full border-2 border-white/85 bg-black/20 px-6 py-3 text-base font-semibold tracking-wide transition-all hover:bg-white hover:text-black"
-              >
-                Watch our introduction
-              </button>
-              <a
-                href="#get-involved"
-                className="rounded-full border-2 border-white/85 bg-black/20 px-6 py-3 text-base font-semibold tracking-wide transition-all hover:bg-white hover:text-black"
-              >
-                Get Involved
-              </a>
-              <a
-                href="#about"
-                className="rounded-full border-2 border-white/85 bg-black/20 px-6 py-3 text-base font-semibold tracking-wide transition-all hover:bg-white hover:text-black"
-              >
-                About
-              </a>
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="relative z-50 md:hidden rounded-full border border-white/80 p-3 transition-colors hover:bg-white/10"
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown Menu */}
-        <div 
-          className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-opacity duration-300 md:hidden flex items-center justify-center ${
-            mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          <div className="w-[90%] max-w-sm space-y-6 text-center">
-            <button
-              onClick={handleWatchIntro}
-              className="w-full rounded-full border-2 border-white/80 px-6 py-4 text-xl font-semibold transition-all hover:bg-white hover:text-black"
-            >
-              Watch our introduction
-            </button>
-            <a
-              href="#get-involved"
-              onClick={() => setMobileOpen(false)}
-              className="block w-full rounded-full border-2 border-white/80 px-6 py-4 text-xl font-semibold transition-all hover:bg-white hover:text-black"
-            >
-              Get Involved
-            </a>
-            <a
-              href="#about"
-              onClick={() => setMobileOpen(false)}
-              className="block w-full rounded-full border-2 border-white/80 px-6 py-4 text-xl font-semibold transition-all hover:bg-white hover:text-black"
-            >
-              About
-            </a>
-          </div>
-        </div>
-      </header>
+      {/* --- MENU STAGGERED (Gardé car il fonctionnait) --- */}
+      <StaggeredMenu
+        items={menuItems}
+        socialItems={socialItems}
+        logoUrl="/assets/logo.svg"
+        menuButtonColor="#fff"
+        openMenuButtonColor="#000"
+        accentColor="#3b82f6"
+        colors={['#1e3a8a', '#3b82f6', '#ffffff']}
+        position="right"
+        isFixed={true}
+      />
 
       {/* --- HERO SECTION --- */}
       <section id="intro" className="relative h-[95vh] w-full overflow-hidden pt-24">
@@ -195,13 +135,14 @@ export default function App() {
       </section>
 
       {/* --- WHAT WE DO SECTION --- */}
+      
       <section
         id="get-involved"
         className="relative flex min-h-[90vh] items-center py-24"
         style={{
           backgroundImage: "url('/assets/satearth.png')",
           backgroundSize: "cover",
-          backgroundPosition: "50% 40%",
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
@@ -222,59 +163,77 @@ export default function App() {
                 text: "Empowering students to develop and apply ideas through workshops, professional opportunities, and cross-disciplinary projects to encourage business innovation in space.",
               },
             ].map((card, idx) => (
-              <div
+              <SpotlightCard
                 key={idx}
-                className="group rounded-[2rem] border border-white/10 bg-black/40 p-10 backdrop-blur-md transition-all duration-300 hover:bg-black/60 hover:scale-[1.02] hover:border-white/30"
+                className="custom-spotlight-card group h-full rounded-[2rem] border border-white/10 !bg-black/40 p-10 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:border-white/30"
+                spotlightColor="rgba(0, 7, 179, 0.8)"
               >
-                <h4 className="mb-6 text-3xl font-bold md:text-4xl">{card.title}</h4>
-                <p className="text-lg leading-relaxed text-gray-200">{card.text}</p>
-              </div>
+                <div className="relative z-10 h-full flex flex-col">
+                  <h4 className="mb-6 text-3xl font-bold md:text-4xl">{card.title}</h4>
+                  <p className="text-lg leading-relaxed text-gray-200 flex-grow">{card.text}</p>
+                </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- CTA / APPLY SECTION --- */}
+{/* --- CTA / APPLY SECTION --- */}
       <section
         id="apply"
-        className="relative flex flex-col items-center justify-center py-32 px-6 text-center"
+        className="relative flex flex-col items-center justify-center py-32 px-6 text-center overflow-hidden"
       >
-        {/* Background Starfield */}
-        <div 
-          className="absolute inset-0 -z-10"
-          style={{ 
-            backgroundImage: "url('/assets/starsbg.jpg')", 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center' 
-          }} 
-        />
-        <div className="absolute inset-0 -z-10 bg-black/20" />
-
-        <div className="relative w-full max-w-3xl rounded-[2.5rem] border border-white/20 bg-black/40 p-10 md:p-16 backdrop-blur-md shadow-2xl">
-          <h3 className="text-3xl font-extrabold md:text-5xl leading-tight">
-            Some markets grow.
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
-              Others escape gravity.
-            </span>
-          </h3>
-          <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl text-gray-200">
-            Apply now and discover what the future holds for business in space.
-          </p>
-          <a
-            href="#join"
-            className="mx-auto mt-10 inline-block rounded-full bg-white px-10 py-4 text-lg font-bold text-black transition-transform hover:scale-105 hover:bg-gray-100"
-          >
-            Notify me
-          </a>
+        {/* 1. LE BACKGROUND (ColorBends) */}
+        {/* On retire le z-index négatif et on le laisse en flux absolu normal */}
+        <div className="absolute inset-0 w-full h-full">
+          <ColorBends
+            // 👇 ICI : Changement des couleurs pour du bleu
+            // Couleur 1 : Bleu nuit profond | Couleur 2 : Bleu électrique | Couleur 3 : Bleu cyan
+            colors={["#000428", "#004e92", "#0072ff"]} 
+            rotation={30}
+            speed={0.3}
+            scale={1.2}
+            frequency={1.4}
+            warpStrength={1.2}
+            mouseInfluence={0.8}
+            parallax={0.6}
+            noise={0.08}
+            transparent={false}
+          />
         </div>
 
-        <p className="mt-12 text-gray-400">
-          Are you an individual or part of an organization and want to connect or collaborate? Contact us{" "}
-          <a href="#contact" className="text-white underline decoration-1 underline-offset-4 hover:text-blue-200 transition-colors">
-            here
-          </a>.
-        </p>
+
+        {/* 3. LE CONTENU (Texte + Carte) */}
+        {/* IMPORTANT : relative et z-10 pour passer DEVANT le background */}
+        <div className="relative z-10 w-full flex flex-col items-center">
+          
+          <div className="relative w-full max-w-3xl rounded-[2.5rem] border border-white/20 bg-black/40 p-10 md:p-16 backdrop-blur-md shadow-2xl">
+            <h3 className="text-3xl font-extrabold md:text-5xl leading-tight">
+              Some markets grow.
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
+                Others escape gravity.
+              </span>
+            </h3>
+            <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl text-gray-200">
+              Apply now and discover what the future holds for business in space.
+            </p>
+            <a
+              href="#join"
+              className="mx-auto mt-10 inline-block rounded-full bg-white px-10 py-4 text-lg font-bold text-black transition-transform hover:scale-105 hover:bg-gray-100"
+            >
+              Notify me
+            </a>
+          </div>
+
+          <p className="mt-12 text-gray-400">
+            Are you an individual or part of an organization and want to connect or collaborate? Contact us{" "}
+            <a href="#contact" className="text-white underline decoration-1 underline-offset-4 hover:text-blue-200 transition-colors">
+              here
+            </a>.
+          </p>
+
+        </div>
       </section>
 
       {/* --- FOOTER --- */}

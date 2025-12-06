@@ -1,6 +1,99 @@
 @import "tailwindcss";
 
-/* 🌌 Global styles for AstroBridge */
+/* --- 1. CONFIGURATION TAILWIND V4 (THEME) --- */
+@theme {
+  /* On mappe les variables CSS vers les couleurs Tailwind */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/* --- 2. VARIABLES CSS SHADCN --- */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border; /* Maintenant ça marche grâce au bloc @theme ci-dessus */
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* --- 3. ASTROBRIDGE GLOBAL STYLES --- */
 html, body, #root {
   @apply bg-black text-white font-sans;
   font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
@@ -10,18 +103,50 @@ html, body, #root {
   scroll-behavior: smooth;
 }
 
-/* 🌎 Utilities pour les fonds */
-.bg-stars {
-  background-image: url('/assets/starsbg.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-/* 💫 Section spacing et autres styles */
 section {
   @apply py-20 md:py-28;
 }
 
 footer {
   @apply text-sm text-white/60 border-t border-white/10 py-10;
+}
+
+/* --- 4. STAGGERED MENU STYLES --- */
+.staggered-menu-wrapper { position: relative; width: 100%; height: 100%; z-index: 50; }
+.staggered-menu-wrapper.fixed-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 100; overflow: hidden; pointer-events: none; }
+.staggered-menu-wrapper.fixed-wrapper > * { pointer-events: auto; }
+.staggered-menu-header { position: absolute; top: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 2rem 5%; background: transparent; pointer-events: none; z-index: 20; }
+.staggered-menu-header > * { pointer-events: auto; }
+.sm-logo { display: flex; align-items: center; user-select: none; }
+.sm-logo-img { display: block; height: 80px; width: auto; object-fit: contain; }
+.sm-toggle { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; border: none; cursor: pointer; color: #fff; font-weight: 600; line-height: 1; overflow: visible; font-size: 1.5rem; }
+.sm-toggle:focus-visible { outline: 2px solid #ffffffaa; outline-offset: 4px; border-radius: 4px; }
+.sm-toggle-textWrap { position: relative; display: inline-block; height: 1em; overflow: hidden; white-space: nowrap; width: var(--sm-toggle-width, auto); min-width: var(--sm-toggle-width, auto); }
+.sm-toggle-textInner { display: flex; flex-direction: column; line-height: 1; }
+.sm-toggle-line { display: block; height: 1em; line-height: 1; }
+.sm-icon { position: relative; width: 24px; height: 24px; flex: 0 0 24px; display: inline-flex; align-items: center; justify-content: center; will-change: transform; }
+.sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
+.sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 3px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform; }
+.sm-icon-line-v { transform: translate(-50%, -50%) rotate(90deg); }
+.staggered-menu-panel { position: absolute; top: 0; right: 0; width: clamp(300px, 45vw, 500px); height: 100%; background: white; display: flex; flex-direction: column; padding: 8em 3em 3em 3em; overflow-y: auto; z-index: 10; box-shadow: -10px 0 30px rgba(0,0,0,0.5); color: black; }
+.sm-prelayers { position: absolute; top: 0; right: 0; bottom: 0; width: clamp(300px, 45vw, 500px); pointer-events: none; z-index: 5; }
+.sm-prelayer { position: absolute; top: 0; right: 0; height: 100%; width: 100%; transform: translateX(0); }
+.sm-panel-inner { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+.sm-socials { margin-top: auto; padding-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.sm-socials-title { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--sm-accent, #ff0000); }
+.sm-socials-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: row; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.sm-socials-link { font-size: 1.1rem; font-weight: 500; color: #111; text-decoration: none; position: relative; padding: 2px 0; display: inline-block; transition: color 0.3s ease, opacity 0.3s ease; cursor: pointer; }
+.sm-socials-link:hover { color: var(--sm-accent, #ff0000); }
+.sm-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.sm-panel-item { position: relative; color: #000; font-weight: 800; font-size: 3rem; cursor: pointer; line-height: 1; letter-spacing: -1px; text-transform: uppercase; transition: background 0.25s, color 0.25s; display: inline-block; text-decoration: none; padding-right: 1.4em; }
+.sm-panel-itemLabel { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
+.sm-panel-item:hover { color: var(--sm-accent, #5227ff); }
+.sm-panel-list[data-numbering] { counter-reset: smItem; }
+.sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.1em; right: 0; font-size: 20px; font-weight: 400; color: var(--sm-accent, #5227ff); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); }
+
+@media (max-width: 640px) {
+  .staggered-menu-panel, .sm-prelayers { width: 100%; }
+  .sm-panel-item { font-size: 2.25rem; }
+  .staggered-menu-header { padding: 1.5rem; }
+  .sm-logo-img { height: 60px; }
 }
