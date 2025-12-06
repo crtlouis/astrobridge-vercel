@@ -2,6 +2,7 @@ import React from "react";
 import StaggeredMenu from "./components/StaggeredMenu.jsx"; 
 import SpotlightCard from "./components/SpotlightCard.jsx";
 import ColorBends from "./components/ColorBends"; 
+import Magnet from "./components/Magnet";
 
 
 
@@ -39,7 +40,7 @@ export default function App() {
         menuButtonColor="#fff"
         openMenuButtonColor="#000"
         accentColor="#3b82f6"
-        colors={['#1e3a8a', '#3b82f6', '#ffffff']}
+        colors={["#000428", "#004e92", "#0072ff"]}
         position="right"
         isFixed={true}
       />
@@ -60,7 +61,7 @@ export default function App() {
           alt="Earth from space"
           className="absolute inset-0 h-full w-full object-cover object-[50%_55%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black/60" />
 
         {/* Hero Content */}
         <div className="relative z-10 mx-auto h-full max-w-7xl px-6 flex flex-col justify-end pb-20 md:pb-32">
@@ -79,7 +80,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* --- ABOUT SECTION --- */}
+{/* --- ABOUT SECTION --- */}
       <section id="about" className="relative overflow-hidden py-24 md:py-32">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <div className="grid gap-16 md:grid-cols-[0.95fr_1.3fr] md:gap-12">
@@ -100,33 +101,32 @@ export default function App() {
                   alt="Satellite"
                   className="h-[360px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <p className="absolute bottom-0 left-0 right-0 p-8 text-lg md:text-xl font-medium leading-relaxed text-gray-100">
-                  Where strategy and business meets space. Astrobridge brings young business
-                  minds into the space economy through educational content, industry-led talks,
-                  and inter-disciplinary events that launch ideas beyond Earth.
-                </p>
               </div>
             </div>
 
             {/* Right Column */}
             <div className="relative z-10 flex flex-col items-center md:items-end">
-              <div className="relative w-full overflow-hidden rounded-[2rem] md:w-[120%] md:translate-x-12 lg:translate-x-20">
-                <img
-                  src="/assets/falcon.jpg"
-                  alt="SpaceX Falcon"
-                  className="h-[460px] w-full object-cover md:h-[540px]"
-                />
+              
+              {/* --- 2. INTEGRATION DU MAGNET SUR L'IMAGE FALCON --- */}
+              <div className="relative w-full md:w-[120%] md:translate-x-12 lg:translate-x-20 flex justify-center md:justify-end">
+                <Magnet padding={0} disabled={false} magnetStrength={30}>
+                    <div className="relative overflow-hidden rounded-[2rem]">
+                        <img
+                        src="/assets/falcon.jpg"
+                        alt="SpaceX Falcon"
+                        className="h-[460px] w-full object-cover md:h-[540px]"
+                        />
+                    </div>
+                </Magnet>
               </div>
 
-              <div className="mt-10 w-full flex justify-center md:justify-end md:translate-x-12 lg:translate-x-20 md:pr-20">
-                <button
-                  onClick={handleWatchIntro}
-                  className="group flex items-center gap-4 rounded-full border border-white/85 bg-white/5 px-8 py-4 text-lg font-semibold backdrop-blur-sm transition-all hover:bg-white hover:text-black"
-                >
-                  <span className="h-3 w-3 rounded-full bg-white group-hover:bg-black transition-colors" />
-                  Watch our Introduction Video
-                </button>
+              {/* Texte (déplacé sous l'image) */}
+              <div className="mt-10 w-full md:w-[90%] md:translate-x-12 lg:translate-x-20 md:pr-10 text-left md:text-right">
+                <p className="text-lg md:text-xl font-medium leading-relaxed text-gray-300">
+                  Where strategy and business meets space. Astrobridge brings young business
+                  minds into the space economy through educational content, industry-led talks,
+                  and inter-disciplinary events that launch ideas beyond Earth.
+                </p>
               </div>
             </div>
 
@@ -140,12 +140,12 @@ export default function App() {
         id="get-involved"
         className="relative flex min-h-[90vh] items-center py-24"
         style={{
-          backgroundImage: "url('/assets/satearth.png')",
+          backgroundImage: "url('/assets/satearth.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative mx-auto w-full max-w-7xl px-6">
           <div className="grid gap-8 md:gap-12 lg:grid-cols-3">
@@ -165,12 +165,12 @@ export default function App() {
             ].map((card, idx) => (
               <SpotlightCard
                 key={idx}
-                className="custom-spotlight-card group h-full rounded-[2rem] border border-white/10 !bg-black/40 p-10 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:border-white/30"
-                spotlightColor="rgba(0, 7, 179, 0.8)"
+                className="custom-spotlight-card group h-full rounded-4xl border border-white/10 bg-black/40! p-10 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:border-white/30"
+                spotlightColor="rgba(0, 114, 255, 1)  "
               >
                 <div className="relative z-10 h-full flex flex-col">
                   <h4 className="mb-6 text-3xl font-bold md:text-4xl">{card.title}</h4>
-                  <p className="text-lg leading-relaxed text-gray-200 flex-grow">{card.text}</p>
+                  <p className="text-lg leading-relaxed text-gray-200 grow">{card.text}</p>
                 </div>
               </SpotlightCard>
             ))}
@@ -181,37 +181,34 @@ export default function App() {
 {/* --- CTA / APPLY SECTION --- */}
       <section
         id="apply"
-        className="relative flex flex-col items-center justify-center py-32 px-6 text-center overflow-hidden"
+        // MODIFICATION 1 : 'min-h-[80vh]' force la section à prendre 80% de la hauteur de l'écran
+        className="relative flex flex-col items-center justify-center min-h-[80vh] px-6 text-center overflow-hidden"
       >
-        {/* 1. LE BACKGROUND (ColorBends) */}
-        {/* On retire le z-index négatif et on le laisse en flux absolu normal */}
+        {/* Background ColorBends */}
         <div className="absolute inset-0 w-full h-full">
           <ColorBends
-            // 👇 ICI : Changement des couleurs pour du bleu
-            // Couleur 1 : Bleu nuit profond | Couleur 2 : Bleu électrique | Couleur 3 : Bleu cyan
             colors={["#000428", "#004e92", "#0072ff"]} 
-            rotation={30}
-            speed={0.3}
-            scale={1.2}
-            frequency={1.4}
-            warpStrength={1.2}
-            mouseInfluence={0.8}
-            parallax={0.6}
-            noise={0.08}
+            rotation={0}
+            speed={0.2}
+            scale={1.0}
+            frequency={1.0}
+            warpStrength={1.0}
+            mouseInfluence={2.0}
+            parallax={0.5}
+            noise={0.1}
             transparent={false}
           />
         </div>
 
-
-        {/* 3. LE CONTENU (Texte + Carte) */}
-        {/* IMPORTANT : relative et z-10 pour passer DEVANT le background */}
+        {/* Contenu */}
         <div className="relative z-10 w-full flex flex-col items-center">
           
-          <div className="relative w-full max-w-3xl rounded-[2.5rem] border border-white/20 bg-black/40 p-10 md:p-16 backdrop-blur-md shadow-2xl">
+          {/* MODIFICATION 2 : 'max-w-[1000px]' élargit considérablement la zone de texte */}
+          <div className="relative w-full max-w-[1000px]">
             <h3 className="text-3xl font-extrabold md:text-5xl leading-tight">
               Some markets grow.
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-200 to-white">
                 Others escape gravity.
               </span>
             </h3>
