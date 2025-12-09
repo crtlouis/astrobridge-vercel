@@ -6,6 +6,7 @@ import Magnet from "./components/Magnet";
 
 
 
+
 export default function App() {
   
   // --- CONFIGURATION DU MENU ---
@@ -17,7 +18,7 @@ export default function App() {
   ];
 
   const socialItems = [
-    { label: 'Instagram', link: '#' },
+    { label: 'Instagram', link: 'https://www.instagram.com/astrobridge.eur?igsh=bDIyaHlyN2RoanJ1' },
     { label: 'LinkedIn', link: '#' },
     { label: 'Email', link: '#' }
   ];
@@ -87,7 +88,7 @@ export default function App() {
             
             {/* Left Column */}
             <div className="relative z-20 flex flex-col justify-center">
-              <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-extrabold leading-[1.05] tracking-tight -mr-0 md:-mr-24 relative z-30 select-none">
+              <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-extrabold leading-[1.05] tracking-tight mr-0 md:-mr-24 relative z-30 select-none">
                 Europe’s first student
                 <br />
                 association for business
@@ -110,7 +111,7 @@ export default function App() {
               {/* --- 2. INTEGRATION DU MAGNET SUR L'IMAGE FALCON --- */}
               <div className="relative w-full md:w-[120%] md:translate-x-12 lg:translate-x-20 flex justify-center md:justify-end">
                 <Magnet padding={0} disabled={false} magnetStrength={30}>
-                    <div className="relative overflow-hidden rounded-[2rem]">
+                    <div className="relative overflow-hidden rounded-4xl">
                         <img
                         src="/assets/falcon.jpg"
                         alt="SpaceX Falcon"
@@ -241,7 +242,7 @@ export default function App() {
             <span>© {new Date().getFullYear()} AstroBridge</span>
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Instagram</a>
+            <a href="https://www.instagram.com/astrobridge.eur?igsh=bDIyaHlyN2RoanJ1" className="hover:text-white transition-colors">Instagram</a>
             <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
             <a href="#" className="hover:text-white transition-colors">Email</a>
           </div>
